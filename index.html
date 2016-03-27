@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>TestABean by sergiandreplace</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">TestABean</h1>
+      <h2 class="project-tagline">A library to avoid boilerplate when testing beans and simple data objectes</h2>
+      <a href="https://github.com/sergiandreplace/TestABean" class="btn">View on GitHub</a>
+      <a href="https://github.com/sergiandreplace/TestABean/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/sergiandreplace/TestABean/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="testabean" class="anchor" href="#testabean" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>TestABean</h1>
+
+<p>"Tired of testing beans (aka: objects with just gettes/setters and no logic)? Do not test them!"</p>
+
+<p>"But,but,but... They are code, so they need to be tested."</p>
+
+<p>"So test them! But you don't have to write the tests by yourself!"</p>
+
+<p>"But, but, but... how?"</p>
+
+<p>"I'm happy you made that question..."</p>
+
+<p>TestABean is a library intended to help you perform basic testing on plain data objects (or Beans to generalize).</p>
+
+<h2>
+<a id="usage-" class="anchor" href="#usage-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage <a href="https://travis-ci.org/sergiandreplace/TestABean"><img src="https://travis-ci.org/sergiandreplace/TestABean.svg?branch=master" alt="Build Status"></a>
+</h2>
+
+<p>Just execute:</p>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-k">new</span> <span class="pl-smi">TestABean</span>(<span class="pl-smi">MyBean</span><span class="pl-k">.</span>class)<span class="pl-k">.</span>test();</pre></div>
+
+<p>It will check the following:</p>
+
+<ul>
+<li>All the declared fields should have a getter and a setter (or a "is" method for getter in case of booleans)</li>
+<li>All the declared fields can perform a set and then retrieve the same value with a get</li>
+<li>All the declared fields support transitive property. So, after:</li>
+</ul>
+
+<div class="highlight highlight-source-java"><pre>a<span class="pl-k">.</span>setValue(x);
+b<span class="pl-k">.</span>setValue(a<span class="pl-k">.</span>getValue());
+c<span class="pl-k">.</span>setValue(b<span class="pl-k">.</span>getValue());</pre></div>
+
+<p>The following should be true</p>
+
+<div class="highlight highlight-source-java"><pre>c<span class="pl-k">.</span>getValue() <span class="pl-k">==</span> x;</pre></div>
+
+<p>The retrieval and transivite checks are run 100 times each by default on each field with different random values.</p>
+
+<h2>
+<a id="adding-it-to-your-project" class="anchor" href="#adding-it-to-your-project" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Adding it to your project</h2>
+
+<p>Uops! Still working on it. Testing a lot of cases, finishing Javadoc and uploading to mavenCentral. Just give me some time :)</p>
+
+<p>For the time being download it and include in your project if you want to use it.</p>
+
+<h2>
+<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Configuration</h2>
+
+<p>When instancing your TestABean object, you can provide a Configuration object with different parameters:</p>
+
+<div class="highlight highlight-source-java"><pre><span class="pl-smi">Configuration</span> configuration<span class="pl-k">=</span><span class="pl-k">new</span> <span class="pl-smi">Configuration</span>.<span class="pl-smi">Builder</span>()
+                            .setGeneratorFactory(generatorFactory)  <span class="pl-c">// Uses a different GeneratorFactory</span>
+                                                                    <span class="pl-c">// See later for further discussion</span>
+                            .setExceptions(<span class="pl-s"><span class="pl-pds">"</span>readOnlyField<span class="pl-pds">"</span></span>) <span class="pl-c">// Sets a list of fields to not check (readonly, with logic, etc)</span>
+                            .TestingRepetitions(<span class="pl-c1">100</span>) <span class="pl-c">// Sets the number of times tests will be repeated. 100 by default.</span>
+                            .build();
+<span class="pl-k">new</span> <span class="pl-smi">TestABean</span>(<span class="pl-smi">MyBean</span><span class="pl-k">.</span>class, configuration)<span class="pl-k">.</span>test();</pre></div>
+
+<h2>
+<a id="generators" class="anchor" href="#generators" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Generators</h2>
+
+<p>Generators are responsible for creating new random values to test getters and setters. By default, generators are made for primitives and their boxed classes. 
+In order to create a new one, you must extend the class Generator and use the annotation @TargetClass to define which classes will be affected by this generator
+(ex: IntGenerator targets both Integer and int); then, add your generator to a GeneratorFactory instance;</p>
+
+<h2>
+<a id="exceptions" class="anchor" href="#exceptions" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Exceptions</h2>
+
+<p>In some cases, there are fields we don't want to check for many reasons (read only fields, complex data types, etc). If this is the case, you can
+make TestABuild ignore them. You can do it in two ways:</p>
+
+<ul>
+<li>With the setExceptions method of the Configuration Builder</li>
+<li>Annotating your field with @NotABeanField</li>
+</ul>
+
+<h2>
+<a id="todo" class="anchor" href="#todo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>TODO</h2>
+
+<p>This is just an initial version and there is room for a lot of improvement. These are some things in the roadmap:</p>
+
+<ul>
+<li>Ability to inject new checks</li>
+<li>Recursive check for nested classes</li>
+<li>Increase configuration for more flexible tests</li>
+</ul>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License</h2>
+
+<pre><code>
+Copyright 2016 Sergi Martínez
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+   http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+</code></pre>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/sergiandreplace/TestABean">TestABean</a> is maintained by <a href="https://github.com/sergiandreplace">sergiandreplace</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
