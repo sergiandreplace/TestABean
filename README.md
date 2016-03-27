@@ -1,4 +1,4 @@
-#TestABean
+#TestABean [![Build Status](https://travis-ci.org/sergiandreplace/TestABean.svg?branch=master)](https://travis-ci.org/sergiandreplace/TestABean)
 
 "Tired of testing beans (aka: objects with just gettes/setters and no logic)? Do not test them!"
 
@@ -12,7 +12,7 @@
 
 TestABean is a library intended to help you perform basic testing on plain data objects (or Beans to generalize).
 
-## Usage [![Build Status](https://travis-ci.org/sergiandreplace/TestABean.svg?branch=master)](https://travis-ci.org/sergiandreplace/TestABean)
+## Usage 
 
 Just execute:
 
@@ -23,7 +23,7 @@ new TestABean(MyBean.class).test();
 It will check the following:
 
 * All the declared fields should have a getter and a setter (or a "is" method for getter in case of booleans)
-* All the declared fields can perform a set and then retrieve the same value with a get
+* All the declared fields can perform a set and then retrieve the same value with a get (equals used)
 * All the declared fields support transitive property. So, after:
 
 ``` Java
@@ -35,16 +35,18 @@ c.setValue(b.getValue());
 The following should be true
 
 ``` Java
-c.getValue() == x;
+c.getValue().equals(x);
 ```
 
 The retrieval and transivite checks are run 100 times each by default on each field with different random values.
 
 ## Adding it to your project
 
-Uops! Still working on it. Testing a lot of cases, finishing Javadoc and uploading to mavenCentral. Just give me some time :)
+Gradle it!
 
-For the time being download it and include in your project if you want to use it.
+```Groovy
+    testCompile 'com.sergiandreplace.testabean:testabean:1.0.0'
+```
 
 ## Configuration
 
@@ -52,11 +54,11 @@ When instancing your TestABean object, you can provide a Configuration object wi
 
 ``` Java
 Configuration configuration=new Configuration.Builder()
-                            .setGeneratorFactory(generatorFactory)  // Uses a different GeneratorFactory
-                                                                    // See later for further discussion
-                            .setExceptions("readOnlyField") // Sets a list of fields to not check (readonly, with logic, etc)
-                            .TestingRepetitions(100) // Sets the number of times tests will be repeated. 100 by default.
-                            .build();
+    .setGeneratorFactory(generatorFactory)  // Uses a different GeneratorFactory
+                                            // See later for further discussion
+    .setExceptions("readOnlyField") // Sets a list of fields to not check (readonly, with logic, etc)
+    .TestingRepetitions(100) // Sets the number of times tests will be repeated. 100 by default.
+    .build();
 new TestABean(MyBean.class, configuration).test();
 ```
 
@@ -64,7 +66,7 @@ new TestABean(MyBean.class, configuration).test();
 
 Generators are responsible for creating new random values to test getters and setters. By default, generators are made for primitives and their boxed classes. 
 In order to create a new one, you must extend the class Generator<T> and use the annotation @TargetClass to define which classes will be affected by this generator
-(ex: IntGenerator targets both Integer and int); then, add your generator to a GeneratorFactory instance;
+(ex: IntGenerator targets both Integer and int); then, add your generator to a GeneratorFactory instance and supply it via constructor;
 
 ## Exceptions
 
