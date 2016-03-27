@@ -12,7 +12,7 @@
 
 TestABean is a library intended to help you perform basic testing on plain data objects (or Beans to generalize).
 
-## Usage
+## Usage [![Build Status](https://travis-ci.org/sergiandreplace/TestABean.svg?branch=master)](https://travis-ci.org/sergiandreplace/TestABean)
 
 Just execute:
 
