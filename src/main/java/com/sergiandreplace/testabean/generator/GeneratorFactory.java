@@ -17,6 +17,7 @@ public class GeneratorFactory {
         add(new BooleanGenerator());
         add(new FloatGenerator());
         add(new DoubleGenerator());
+        add(new ByteArrayGenerator());
 
     }
 
