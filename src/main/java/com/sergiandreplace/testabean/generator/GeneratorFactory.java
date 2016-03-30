@@ -17,6 +17,10 @@ public class GeneratorFactory {
         add(new BooleanGenerator());
         add(new FloatGenerator());
         add(new DoubleGenerator());
+        add(new ShortGenerator());
+        add(new ByteGenerator());
+        add(new DateGenerator());
+        add(new ListGenerator());
 
     }
 
