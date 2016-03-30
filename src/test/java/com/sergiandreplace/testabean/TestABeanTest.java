@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.lang.reflect.Field;
+import java.util.AbstractList;
 import java.util.List;
 
 
@@ -28,7 +29,7 @@ public class TestABeanTest {
     @Test
     public void whenFieldsRequest_ShouldReturnRightList() {
         List<Field> testableFields=testABean.getTestableFields();
-        Assertions.assertThat(testableFields).extracting("name").containsOnly("aField","anotherField","floatField","someBoolean");
+        Assertions.assertThat(testableFields).extracting("name").containsOnly("aField","anotherField","floatField","someBoolean", "abstractList");
     }
 
     @Test
@@ -73,6 +74,7 @@ public class TestABeanTest {
         private String thisOneWillBeIgnored;
         private float floatField;
         private boolean someBoolean;
+        private AbstractList<String> abstractList;
 
         public String getAField() {
             return aField;
@@ -112,6 +114,14 @@ public class TestABeanTest {
 
         public void setSomeBoolean(boolean someBoolean) {
             this.someBoolean = someBoolean;
+        }
+
+        public AbstractList<String> getAbstractList() {
+            return abstractList;
+        }
+
+        public void setAbstractList(AbstractList<String> abstractList) {
+            this.abstractList = abstractList;
         }
     }
 
