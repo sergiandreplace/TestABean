@@ -57,7 +57,7 @@ Configuration configuration=new Configuration.Builder()
     .setGeneratorFactory(generatorFactory)  // Uses a different GeneratorFactory
                                             // See later for further discussion
     .setExceptions("readOnlyField") // Sets a list of fields to not check (readonly, with logic, etc)
-    .TestingRepetitions(100) // Sets the number of times tests will be repeated. 100 by default.
+    .setTestingRepetitions(50) // Sets the number of times tests will be repeated. 100 by default.
     .build();
 new TestABean(MyBean.class, configuration).test();
 ```
