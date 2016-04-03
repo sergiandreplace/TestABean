@@ -21,7 +21,7 @@ public class GeneratorFactory {
         add(new ByteGenerator());
         add(new DateGenerator());
         add(new ListGenerator());
-
+        add(new CharGenerator());
     }
 
 
@@ -37,10 +37,15 @@ public class GeneratorFactory {
     }
 
     public Generator get(Class targetClass) {
+        if (targetClass.isArray()) {
+            return new ArrayGenerator(PrimitiveUtil.getWrapper(targetClass.getComponentType()), this);
+        }
         return generators.get(targetClass);
     }
 
     public Map<Class, Generator> getGenerators() {
         return generators;
     }
+
+
 }

@@ -5,7 +5,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 import java.util.Random;
 
-@TargetClass({String.class, char[].class})
+@TargetClass({String.class})
 public class StringGenerator implements Generator<String> {
 
     private static final Random rand = new Random(System.currentTimeMillis());
