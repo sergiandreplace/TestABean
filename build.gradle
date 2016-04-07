@@ -34,7 +34,7 @@ publish {
     userOrg = 'sergiandreplace'
     groupId = 'com.sergiandreplace.testabean'
     artifactId = 'testabean'
-    publishVersion = '1.0.0'
+    publishVersion = '1.0.1'
     desc = 'A library to avoid boilerplate when testing beans and simple data objectes'
     website = 'https://github.com/sergiandreplace/TestABean'
 }

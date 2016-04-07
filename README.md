@@ -45,7 +45,7 @@ The retrieval and transivite checks are run 100 times each by default on each fi
 Gradle it!
 
 ```Groovy
-    testCompile 'com.sergiandreplace.testabean:testabean:1.0.0'
+    testCompile 'com.sergiandreplace.testabean:testabean:1.0.1'
 ```
 
 ## Configuration
