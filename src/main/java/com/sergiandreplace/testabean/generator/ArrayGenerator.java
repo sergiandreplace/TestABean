@@ -13,12 +13,12 @@ public class ArrayGenerator implements Generator<Object> {
     private Random random=new Random(System.currentTimeMillis());
 
     public ArrayGenerator(Class clazz, GeneratorFactory generatorFactory) {
-        this.clazz=clazz;
+        this.clazz=clazz;;
         this.generatorFactory = generatorFactory;
     }
 
     public ArrayGenerator(Class clazz, GeneratorFactory generatorFactory, int minLenght, int maxLength) {
-        this.clazz=PrimitiveUtil.getWrapper(clazz);
+        this.clazz=clazz;
         this.generatorFactory = generatorFactory;
         this.minLength=minLenght;
         this.maxLenght=maxLength;
@@ -29,9 +29,9 @@ public class ArrayGenerator implements Generator<Object> {
         int size=random.nextInt(maxLenght-minLength)+minLength;
 
         Generator generator=generatorFactory.get(clazz);
-        Object[] array= (Object[]) Array.newInstance(clazz, size);
+        Object array=  Array.newInstance(clazz, size);
         for (int i = 0; i<size;i++) {
-            array[i] = generator.next();
+            Array.set(array,i, generator.next());
         }
         return array;
     }

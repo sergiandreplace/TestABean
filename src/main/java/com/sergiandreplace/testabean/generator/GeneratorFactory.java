@@ -38,7 +38,7 @@ public class GeneratorFactory {
 
     public Generator get(Class targetClass) {
         if (targetClass.isArray()) {
-            return new ArrayGenerator(PrimitiveUtil.getWrapper(targetClass.getComponentType()), this);
+            return new ArrayGenerator(targetClass.getComponentType(), this);
         }
         return generators.get(targetClass);
     }

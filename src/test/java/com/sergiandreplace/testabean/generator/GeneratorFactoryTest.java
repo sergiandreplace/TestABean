@@ -20,6 +20,16 @@ public class GeneratorFactoryTest {
         generatorFactory = new GeneratorFactory();
     }
 
+    @Test (expected = IllegalArgumentException.class)
+    public void whenAddedGeneratorWithoutAnnotation_ShouldRaiseException() {
+        generatorFactory.add(new Generator() {
+            @Override
+            public Object next() {
+                return null;
+            }
+        });
+    }
+
     @Test
     public void whenRequestStringGenerator_ShouldReturnString() {
         Generator generator=generatorFactory.get(String.class);
@@ -108,14 +118,14 @@ public class GeneratorFactoryTest {
     public void whenRequestIntegerArray_ShouldReturnIntegerArray() {
         Generator generator=generatorFactory.get(int[].class);
         assertThat(generator.next().getClass().isArray());
-        assertThat(generator.next().getClass().getComponentType()).isEqualTo(Integer.class);
+        assertThat(generator.next().getClass().getComponentType()).isEqualTo(int.class);
     }
 
     @Test
     public void whenRequestCharArrayGenerator_ShouldReturnString() {
         Generator generator=generatorFactory.get(char[].class);
         assertThat(generator.next().getClass().isArray());
-        assertThat(generator.next().getClass().getComponentType()).isEqualTo(Character.class);
+        assertThat(generator.next().getClass().getComponentType()).isEqualTo(char.class);
     }
 
     @Test

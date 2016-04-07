@@ -6,12 +6,12 @@ public class FieldException extends Exception {
 
     public FieldException(String message, String field) {
         super(message);
-        this.field=field;
+        setField(field);
     }
 
     public FieldException(String message, String field, Throwable cause) {
         super(message,cause);
-        this.field=field;
+        setField(field);
     }
 
     public String getField() {

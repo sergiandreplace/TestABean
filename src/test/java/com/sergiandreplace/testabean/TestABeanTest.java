@@ -39,10 +39,15 @@ public class TestABeanTest {
     }
 
 
-    @Test(expected = FieldException.class)
-    public void whenTestingBeanMissingASetter_ShouldLaunchException() throws NoSuchMethodException, FieldException, NoSuchFieldException {
+    @Test
+    public void whenTestingBeanMissingASetter_ShouldLaunchException() throws NoSuchMethodException, NoSuchFieldException {
         testABean = new TestABean(BeanMissingSetter.class);
-        testABean.test();
+        try {
+            testABean.test();
+            Assertions.fail("Assertion not captured when field setter missing");
+        }catch (FieldException e) {
+            Assertions.assertThat(e.getField()).isEqualTo("field");
+        }
     }
 
     @Test(expected = FieldException.class)
@@ -71,6 +76,24 @@ public class TestABeanTest {
     public void whenBeanWithArraysIsTest_ShouldWorkFine() throws FieldException {
         testABean=new TestABean(BeanWithArrays.class);
         testABean.test();
+    }
+
+    @Test
+    public void whenBeanWithPrimitveArrayIsTested_ShouldWorkFine() throws FieldException {
+        testABean=new TestABean(BeanWithPrimitiveArrays.class);
+        testABean.test();
+    }
+
+    public static class BeanWithPrimitiveArrays {
+        private int[] ints;
+
+        public int[] getInts() {
+            return ints;
+        }
+
+        public void setInts(int[] ints) {
+            this.ints = ints;
+        }
     }
 
     public static class BeanWithArrays {
