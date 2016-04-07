@@ -4,6 +4,8 @@ import com.sergiandreplace.testabean.generator.GeneratorFactory;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 
@@ -37,6 +39,12 @@ public class ConfigurationTest {
     @Test
     public void whenExceptionsConfigured_ShouldReturnCorrectValue() {
         Configuration configuration = builder.setExceptions("one","two","three").build();
+        assertThat(configuration.getExceptions()).containsExactly("one","two","three");
+    }
+
+    @Test
+    public void whenExceptionsConfiguredAsList_ShouldReturnCorrectValue() {
+        Configuration configuration = builder.setExceptions(Arrays.asList(new String[]{"one", "two", "three"})).build();
         assertThat(configuration.getExceptions()).containsExactly("one","two","three");
     }
 

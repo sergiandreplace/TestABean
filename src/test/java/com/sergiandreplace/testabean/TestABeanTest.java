@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import java.lang.reflect.Field;
 import java.util.AbstractList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -38,10 +39,15 @@ public class TestABeanTest {
     }
 
 
-    @Test(expected = FieldException.class)
-    public void whenTestingBeanMissingASetter_ShouldLaunchException() throws NoSuchMethodException, FieldException, NoSuchFieldException {
+    @Test
+    public void whenTestingBeanMissingASetter_ShouldLaunchException() throws NoSuchMethodException, NoSuchFieldException {
         testABean = new TestABean(BeanMissingSetter.class);
-        testABean.test();
+        try {
+            testABean.test();
+            Assertions.fail("Assertion not captured when field setter missing");
+        }catch (FieldException e) {
+            Assertions.assertThat(e.getField()).isEqualTo("field");
+        }
     }
 
     @Test(expected = FieldException.class)
@@ -64,6 +70,123 @@ public class TestABeanTest {
         testABean = new TestABean(BeanWithUnknownType.class, configuration);
         testABean.test();
 
+    }
+
+    @Test
+    public void whenBeanWithArraysIsTest_ShouldWorkFine() throws FieldException {
+        testABean=new TestABean(BeanWithArrays.class);
+        testABean.test();
+    }
+
+    @Test
+    public void whenBeanWithPrimitveArrayIsTested_ShouldWorkFine() throws FieldException {
+        testABean=new TestABean(BeanWithPrimitiveArrays.class);
+        testABean.test();
+    }
+
+    public static class BeanWithPrimitiveArrays {
+        private int[] ints;
+
+        public int[] getInts() {
+            return ints;
+        }
+
+        public void setInts(int[] ints) {
+            this.ints = ints;
+        }
+    }
+
+    public static class BeanWithArrays {
+        private String[] strings;
+        private Short[] shorts;
+        private Byte[] bytes;
+        private Character[] chars;
+        private Integer[] ints;
+        private Float[] floats;
+        private Long[] longs;
+        private Double[] doubles;
+        private Boolean[] booleans;
+        private Date[] dates;
+
+        public String[] getStrings() {
+            return strings;
+        }
+
+        public void setStrings(String[] strings) {
+            this.strings = strings;
+        }
+
+        public Short[] getShorts() {
+            return shorts;
+        }
+
+        public void setShorts(Short[] shorts) {
+            this.shorts = shorts;
+        }
+
+        public Byte[] getBytes() {
+            return bytes;
+        }
+
+        public void setBytes(Byte[] bytes) {
+            this.bytes = bytes;
+        }
+
+        public Character[] getChars() {
+            return chars;
+        }
+
+        public void setChars(Character[] chars) {
+            this.chars = chars;
+        }
+
+        public Integer[] getInts() {
+            return ints;
+        }
+
+        public void setInts(Integer[] ints) {
+            this.ints = ints;
+        }
+
+        public Float[] getFloats() {
+            return floats;
+        }
+
+        public void setFloats(Float[] floats) {
+            this.floats = floats;
+        }
+
+        public Long[] getLongs() {
+            return longs;
+        }
+
+        public void setLongs(Long[] longs) {
+            this.longs = longs;
+        }
+
+        public Double[] getDoubles() {
+            return doubles;
+        }
+
+        public void setDoubles(Double[] doubles) {
+            this.doubles = doubles;
+        }
+
+        public Boolean[] getBooleans() {
+            return booleans;
+        }
+
+        public void setBooleans(Boolean[] booleans) {
+            this.booleans = booleans;
+        }
+
+        public Date[] getDates() {
+            return dates;
+        }
+
+        public void setDates(Date[] dates) {
+            this.dates = dates;
+        }
     }
 
     public static class TestableBean {

@@ -20,10 +20,27 @@ public class GeneratorFactoryTest {
         generatorFactory = new GeneratorFactory();
     }
 
+    @Test (expected = IllegalArgumentException.class)
+    public void whenAddedGeneratorWithoutAnnotation_ShouldRaiseException() {
+        generatorFactory.add(new Generator() {
+            @Override
+            public Object next() {
+                return null;
+            }
+        });
+    }
+
     @Test
     public void whenRequestStringGenerator_ShouldReturnString() {
         Generator generator=generatorFactory.get(String.class);
         assertThat(generator.next()).isInstanceOf(String.class);
+    }
+
+    @Test
+    public void whenRequestStringArrayGenerator_ShouldReturnStringArray() {
+        Generator generator=generatorFactory.get(String[].class);
+        assertThat(generator.next().getClass().isArray());
+        assertThat(generator.next().getClass().getComponentType()).isEqualTo(String.class);
     }
 
     @Test
@@ -39,6 +56,13 @@ public class GeneratorFactoryTest {
     }
 
     @Test
+    public void whenRequestBooleanArray_ShouldReturnBooleanArray() {
+        Generator generator=generatorFactory.get(Boolean[].class);
+        assertThat(generator.next().getClass().isArray());
+        assertThat(generator.next().getClass().getComponentType()).isEqualTo(Boolean.class);
+    }
+
+    @Test
     public void whenRequestDoubleGenerator_ShouldReturnDouble() {
         Generator generator=generatorFactory.get(Double.class);
         assertThat(generator.next()).isInstanceOf(Double.class);
@@ -49,6 +73,14 @@ public class GeneratorFactoryTest {
         Generator generator=generatorFactory.get(double.class);
         assertThat(generator.next()).isInstanceOf(Double.class);
     }
+
+    @Test
+    public void whenRequestDoubleArray_ShouldReturnDoubleArray() {
+        Generator generator=generatorFactory.get(Double[].class);
+        assertThat(generator.next().getClass().isArray());
+        assertThat(generator.next().getClass().getComponentType()).isEqualTo(Double.class);
+    }
+
 
     @Test
     public void whenRequestFloatGenerator_ShouldReturnFloat() {
@@ -63,6 +95,14 @@ public class GeneratorFactoryTest {
     }
 
     @Test
+    public void whenRequestFloatArray_ShouldReturnFloatArray() {
+        Generator generator=generatorFactory.get(Float[].class);
+        assertThat(generator.next().getClass().isArray());
+        assertThat(generator.next().getClass().getComponentType()).isEqualTo(Float.class);
+    }
+
+
+    @Test
     public void whenRequestIntegerGenerator_ShouldReturnInteger() {
         Generator generator=generatorFactory.get(Integer.class);
         assertThat(generator.next()).isInstanceOf(Integer.class);
@@ -75,9 +115,17 @@ public class GeneratorFactoryTest {
     }
 
     @Test
-    public void whenRequestByteArrayGenerator_ShouldReturnString() {
+    public void whenRequestIntegerArray_ShouldReturnIntegerArray() {
+        Generator generator=generatorFactory.get(int[].class);
+        assertThat(generator.next().getClass().isArray());
+        assertThat(generator.next().getClass().getComponentType()).isEqualTo(int.class);
+    }
+
+    @Test
+    public void whenRequestCharArrayGenerator_ShouldReturnString() {
         Generator generator=generatorFactory.get(char[].class);
-        assertThat(generator.next()).isInstanceOf(String.class);
+        assertThat(generator.next().getClass().isArray());
+        assertThat(generator.next().getClass().getComponentType()).isEqualTo(char.class);
     }
 
     @Test
@@ -93,6 +141,14 @@ public class GeneratorFactoryTest {
     }
 
     @Test
+    public void whenRequestLongArray_ShouldReturnLongArray() {
+        Generator generator=generatorFactory.get(Long[].class);
+        assertThat(generator.next().getClass().isArray());
+        assertThat(generator.next().getClass().getComponentType()).isEqualTo(Long.class);
+    }
+
+
+    @Test
     public void whenRequestShortGenerator_ShouldReturnShort() {
         Generator generator=generatorFactory.get(Short.class);
         assertThat(generator.next()).isInstanceOf(Short.class);
@@ -103,6 +159,14 @@ public class GeneratorFactoryTest {
         Generator generator=generatorFactory.get(short.class);
         assertThat(generator.next()).isInstanceOf(Short.class);
     }
+
+    @Test
+    public void whenRequestShortArray_ShouldReturnShortArray() {
+        Generator generator=generatorFactory.get(Short[].class);
+        assertThat(generator.next().getClass().isArray());
+        assertThat(generator.next().getClass().getComponentType()).isEqualTo(Short.class);
+    }
+
 
 
     @Test
@@ -118,10 +182,26 @@ public class GeneratorFactoryTest {
     }
 
     @Test
+    public void whenRequestByteArray_ShouldReturnByteArray() {
+        Generator generator=generatorFactory.get(Byte[].class);
+        assertThat(generator.next().getClass().isArray());
+        assertThat(generator.next().getClass().getComponentType()).isEqualTo(Byte.class);
+    }
+
+
+    @Test
     public void whenRequestDateGenerator_ShouldReturnDate() {
         Generator generator=generatorFactory.get(Date.class);
         assertThat(generator.next()).isInstanceOf(Date.class);
     }
+
+    @Test
+    public void whenRequestDateArray_ShouldReturnDateArray() {
+        Generator generator=generatorFactory.get(Date[].class);
+        assertThat(generator.next().getClass().isArray());
+        assertThat(generator.next().getClass().getComponentType()).isEqualTo(Date.class);
+    }
+
 
     @Test
     public void whenRequestListGenerator_ShouldReturnList() {
@@ -129,6 +209,14 @@ public class GeneratorFactoryTest {
         Generator generator=generatorFactory.get(AbstractList.class);
         assertThat(generator.next()).getClass().isAssignableFrom(AbstractList.class);
     }
+
+    @Test
+    public void whenRequestListArray_ShouldReturnBooleanArray() {
+        Generator generator=generatorFactory.get(AbstractList[].class);
+        assertThat(generator.next().getClass().isArray());
+        assertThat(generator.next().getClass().getComponentType().isAssignableFrom(AbstractList.class)).isTrue();
+    }
+
 
 
 
