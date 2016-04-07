@@ -4,6 +4,8 @@ version '1.0'
 apply plugin: 'java'
 apply plugin: 'com.novoda.bintray-release'
 
+apply plugin: 'com.github.kt3k.coveralls'
+
 sourceCompatibility = 1.7
 targetCompatibility = 1.7
 
