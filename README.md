@@ -1,4 +1,6 @@
-#TestABean [![Build Status](https://travis-ci.org/sergiandreplace/TestABean.svg?branch=master)](https://travis-ci.org/sergiandreplace/TestABean)
+#TestABean [![Build Status](https://travis-ci.org/sergiandreplace/TestABean.svg?branch=master)](https://travis-ci.org/sergiandreplace/TestABean) [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-TestABean-brightgreen.svg?style=flat)](http://android-arsenal.com/details/1/3345)
+                                                                                                                                                 Close
+
 
 "Tired of testing beans (aka: objects with just gettes/setters and no logic)? Do not test them!"
 
